@@ -1,0 +1,25 @@
+function[bestX]=FRCG(x,A,y,n)
+%k=1
+gk=A'*(A*x-y);
+dk=-gk;
+x=x+0.01*dk;
+g=gk;
+%k>=2
+m=2;
+for i=2:n
+    C=x;
+gk=A'*(A*x-y);   
+B=norm(gk,2)^2/norm(g,2)^2;
+dk=-gk+B*dk;
+x=x+0.01*dk;
+g=gk;
+D=x-C;
+%m=m+1;
+if(norm(D,2)<0.001)
+    break
+end
+x(find(x<0))=0;
+x(find(x>1))=1;
+bestX=x;
+%m=m;
+end
